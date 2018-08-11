@@ -43,6 +43,5 @@ function xmldb_local_latesubmissions_install() {
         }
         $target = \core_analytics\manager::get_target('\local_latesubmissions\analytics\target\late_assign_submission');
         $model = \core_analytics\model::create($target, $indicators, '\local_latesubmissions\analytics\time_splitting\really_close_to_deadline');
-        $model->enable();
     }
 }
