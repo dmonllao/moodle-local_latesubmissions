@@ -172,6 +172,13 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         }
 
         $log = reset($nlogs);
+
+        if ($log->timecreated < $analysable->get_start()) {
+            // Old submission, send it to the bin.
+            debugging('submission before course start to garbage');
+            return null;
+        }
+
         if ($log->timecreated > $analysable->get_end()) {
             // Assessable submitted after the end time (due date or cut off if no due date)
             return 1;
