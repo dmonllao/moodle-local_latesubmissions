@@ -91,6 +91,14 @@ class quiz_attempts extends \core_analytics\local\indicator\linear {
                 'AND eventname = :eventname';
             $params = array('userid' => $user->id, 'contextlevel' => CONTEXT_MODULE,
                 'cmid' => $cm->id, 'eventname' => '\mod_quiz\event\attempt_submitted');
+            if ($starttime) {
+                $select .= " AND timecreated >= :starttime";
+                $params['starttime'] = $starttime;
+            }
+            if ($endtime) {
+                $select .= " AND timecreated <= :endtime";
+                $params['endtime'] = $endtime;
+            }
             $events = $logstore->get_events_select($select, $params, 'timecreated ASC', 0, 1);
 
             if (!$events) {
