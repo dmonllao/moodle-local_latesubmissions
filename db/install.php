@@ -35,7 +35,29 @@ function xmldb_local_latesubmissions_install() {
     if (!in_array('\local_latesubmissions\analytics\target\late_assign_submission', $usedtargets)) {
 
         $indicators = [];
-        $indicatorclasses = ["\\core\\analytics\\indicator\\any_write_action","\\core\\analytics\\indicator\\any_write_action_in_course","\\core\\analytics\\indicator\\read_actions","\\local_latesubmissions\\analytics\\indicator\\accept_statement_set","\\local_latesubmissions\\analytics\\indicator\\accessed_section_activities","\\local_latesubmissions\\analytics\\indicator\\any_read_action","\\local_latesubmissions\\analytics\\indicator\\any_read_action_in_course","\\local_latesubmissions\\analytics\\indicator\\assignment_submissions","\\local_latesubmissions\\analytics\\indicator\\cutoff_set","\\local_latesubmissions\\analytics\\indicator\\grade_item_weight","\\local_latesubmissions\\analytics\\indicator\\grade_to_pass_set","\\local_latesubmissions\\analytics\\indicator\\grading_duedate_set","\\local_latesubmissions\\analytics\\indicator\\guest_access_enabled","\\local_latesubmissions\\analytics\\indicator\\is_user_self_enrolled","\\local_latesubmissions\\analytics\\indicator\\maxattempts_set","\\local_latesubmissions\\analytics\\indicator\\self_enrol_enabled","\\local_latesubmissions\\analytics\\indicator\\send_notifications_set","\\local_latesubmissions\\analytics\\indicator\\send_student_notifications_set","\\local_latesubmissions\\analytics\\indicator\\submit_choice_close_to_close","\\local_latesubmissions\\analytics\\indicator\\submit_close_to_close","\\local_latesubmissions\\analytics\\indicator\\submit_close_to_due","\\local_latesubmissions\\analytics\\indicator\\user_activity","\\local_latesubmissions\\analytics\\indicator\\write_actions_amount","\\core_course\\analytics\\indicator\\completion_enabled","\\core_user\\analytics\\indicator\\user_profile_set"];
+        $indicatorclasses = [
+            "\\core\\analytics\\indicator\\any_write_action",
+            "\\core\\analytics\\indicator\\any_write_action_in_course",
+            "\\core\\analytics\\indicator\\read_actions",
+            "\\local_latesubmissions\\analytics\\indicator\\accessed_section_activities",
+            "\\local_latesubmissions\\analytics\\indicator\\any_read_action",
+            "\\local_latesubmissions\\analytics\\indicator\\any_read_action_in_course",
+            "\\local_latesubmissions\\analytics\\indicator\\assignment_submissions",
+            "\\local_latesubmissions\\analytics\\indicator\\forum_posts",
+            "\\local_latesubmissions\\analytics\\indicator\\grade_item_weight",
+            "\\local_latesubmissions\\analytics\\indicator\\grade_to_pass_set",
+            "\\local_latesubmissions\\analytics\\indicator\\guest_access_enabled",
+            "\\local_latesubmissions\\analytics\\indicator\\is_user_self_enrolled",
+            "\\local_latesubmissions\\analytics\\indicator\\quiz_attempts",
+            "\\local_latesubmissions\\analytics\\indicator\\self_enrol_enabled",
+            "\\local_latesubmissions\\analytics\\indicator\\submit_choice_close_to_close",
+            "\\local_latesubmissions\\analytics\\indicator\\submit_close_to_close",
+            "\\local_latesubmissions\\analytics\\indicator\\submit_close_to_due",
+            "\\local_latesubmissions\\analytics\\indicator\\user_activity",
+            "\\local_latesubmissions\\analytics\\indicator\\write_actions_amount",
+            "\\core_course\\analytics\\indicator\\completion_enabled",
+            "\\core_user\\analytics\\indicator\\user_profile_set"
+        ];
 
         foreach ($indicatorclasses as $indicatorclass) {
             $indicator = \core_analytics\manager::get_indicator($indicatorclass);
