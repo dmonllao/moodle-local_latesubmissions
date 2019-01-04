@@ -37,6 +37,10 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         return new \lang_string('lateassignsubmission', 'local_latesubmissions');
     }
 
+    protected function ignored_predicted_classes() {
+        return array(0);
+    }
+
     /**
      * Returns the analyser class that should be used along with this target.
      *
@@ -46,6 +50,43 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         return '\local_latesubmissions\analytics\analyser\assign_submissions';
     }
 
+    /**
+     * classes_description
+     *
+     * @return string[]
+     */
+    protected static function classes_description() {
+        return array(
+            get_string('no'),
+            get_string('atriskmissingsubmission', 'local_latesubmissions'),
+        );
+    }
+
+    /**
+     * prediction_actions
+     *
+     * @param \core_analytics\prediction $prediction
+     * @param bool $includedetailsaction
+     * @return \core_analytics\prediction_action[]
+     */
+    public function prediction_actions(\core_analytics\prediction $prediction, $includedetailsaction = false) {
+        global $USER;
+
+        $actions = array();
+
+        $sampledata = $prediction->get_sample_data();
+        $studentid = $sampledata['user']->id;
+
+        $attrs = array('target' => '_blank');
+
+        // Send a message.
+        $url = new \moodle_url('/message/index.php', array('user' => $USER->id, 'id' => $studentid));
+        $pix = new \pix_icon('t/message', get_string('sendmessage', 'message'));
+        $actions[] = new \core_analytics\prediction_action('studentmessage', $prediction, $url, $pix,
+            get_string('sendmessage', 'message'), false, $attrs);
+
+        return array_merge($actions, parent::prediction_actions($prediction, $includedetailsaction));
+    }
     /**
      * Allows the target to verify that the analysable is a good candidate.
      *
@@ -174,8 +215,8 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         $log = reset($nlogs);
 
         if ($log->timecreated < $analysable->get_start()) {
-            // Old submission, send it to the bin.
-            debugging('submission before course start to garbage');
+            // Old submission, send it to the bin as it is likely that this is an
+            // old enrolment or that the assignment dates are wrong.
             return null;
         }
 

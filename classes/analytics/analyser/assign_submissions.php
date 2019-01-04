@@ -52,6 +52,16 @@ class assign_submissions extends by_activity {
         return 'assign_submission';
     }
 
+    protected function cmid_from_sampleid($sampleid) {
+        global $DB;
+
+        $sql = "SELECT cm.id FROM {course_modules} cm
+                  JOIN {modules} m ON m.id = cm.module
+                  JOIN {assign_submission} ass ON ass.assignment = cm.instance
+                 WHERE ass.id = :id";
+        $cm = $DB->get_record_sql($sql, ['id' => $sampleid]);
+        return $cm->id;
+    }
     /**
      * Returns the analysable of a sample
      *
@@ -59,7 +69,8 @@ class assign_submissions extends by_activity {
      * @return \core_analytics\analysable
      */
     public function get_sample_analysable($sampleid) {
-        return new \local_latesubmissions\assign($sampleid);
+        $cmid = $this->cmid_from_sampleid($sampleid);
+        return new \local_latesubmissions\assign($cmid);
     }
 
     /**
@@ -77,7 +88,8 @@ class assign_submissions extends by_activity {
      * @return \context
      */
     public function sample_access_context($sampleid) {
-        return \context_module::instance($sampleid);
+        $cmid = $this->cmid_from_sampleid($sampleid);
+        return \context_module::instance($cmid);
     }
 
     /**
