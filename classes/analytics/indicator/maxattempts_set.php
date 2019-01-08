@@ -60,6 +60,13 @@ class maxattempts_set extends \core_analytics\local\indicator\discrete {
         return [0, 1, 2, 3];
     }
 
+    public function get_display_value($value, $subtype = false) {
+        if ($value == 0) {
+            return get_string('unlimitedattempts', 'assign');
+        }
+        return $value;
+    }
+
     public function get_calculation_outcome($value, $subtype = false) {
         // TODO Update this if we want this model to be used in production.
         return self::OUTCOME_OK;
