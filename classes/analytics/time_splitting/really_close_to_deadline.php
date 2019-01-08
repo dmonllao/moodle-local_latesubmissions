@@ -44,12 +44,30 @@ class really_close_to_deadline extends \core_analytics\local\time_splitting\base
      * @return bool
      */
     public function is_valid_analysable(\core_analytics\analysable $analysable) {
+
+        $now = time();
+
         if (!$analysable->get_end()) {
+            return false;
+        }
+
+        if ($now < $analysable->get_start()) {
+            // Does not make sense to analyse something that has not yet begun.
             return false;
         }
 
         if ($analysable->get_end() - $analysable->get_start() < (DAYSECS * 4)) {
             // We will not have time to provide useful insights.
+            return false;
+        }
+
+        if ($analysable->get_end() < $now) {
+            // Past stuff is good for training.
+            return true;
+        }
+
+        if ($now + (2 * DAYSECS) < $analysable->get_end()) {
+            // We can not use this to get predictions as we have not reached 'due date' - 2 days.
             return false;
         }
 
