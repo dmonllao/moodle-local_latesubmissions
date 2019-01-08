@@ -48,7 +48,7 @@ class really_close_to_deadline extends \core_analytics\local\time_splitting\base
             return false;
         }
 
-        if ($analysable->get_end() - $analysable->get_start() < WEEKSECS) {
+        if ($analysable->get_end() - $analysable->get_start() < (DAYSECS * 4)) {
             // We will not have time to provide useful insights.
             return false;
         }
