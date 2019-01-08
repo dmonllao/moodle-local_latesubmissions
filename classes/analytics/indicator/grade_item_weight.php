@@ -62,6 +62,27 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
         return [0, 1, 2, 3, 4];
     }
 
+    public function get_display_value($value, $subtype = false) {
+        switch ($value) {
+            case '0':
+                $displayvalue = get_string('gradeitemweightclass0', 'local_latesubmissions');
+                break;
+            case '1':
+                $displayvalue = get_string('gradeitemweightclass1', 'local_latesubmissions');
+                break;
+            case '2':
+                $displayvalue = get_string('gradeitemweightclass2', 'local_latesubmissions');
+                break;
+            case '3':
+                $displayvalue = get_string('gradeitemweightclass3', 'local_latesubmissions');
+                break;
+            case '4':
+                $displayvalue = get_string('gradeitemweightclass4', 'local_latesubmissions');
+                break;
+        }
+        return $displayvalue;
+    }
+
     public function get_calculation_outcome($value, $subtype = false) {
         // TODO Update this if we want this model to be used in production.
 		return self::OUTCOME_OK;
