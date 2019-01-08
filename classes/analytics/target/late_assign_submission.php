@@ -145,6 +145,12 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         $userenrol = $this->retrieve('user_enrolments', $sampleid);
         $course = $this->retrieve('course', $sampleid);
         $assign = $this->retrieve('assign', $sampleid);
+        $submission = $this->retrieve('assign_submission', $sampleid);
+
+        if (!$fortraining && $submission->status != 'new') {
+            // Already submitted. Must be valid for training though.
+            return false;
+        }
 
         if ($userenrol->timeend &&
                 ($course->startdate > $userenrol->timeend || $assign->duedate > $userenrol->timeend)) {
