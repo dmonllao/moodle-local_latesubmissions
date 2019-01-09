@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Amount of write actions.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,7 +27,7 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Read actions indicator.
+ * Amount of write actions.
  *
  * @package   core
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
@@ -45,7 +47,7 @@ class write_actions_amount extends \core_analytics\local\indicator\linear {
     }
 
     /**
-     * required_sample_data
+     * Only the course is required. The user will be used if available.
      *
      * @return string[]
      */

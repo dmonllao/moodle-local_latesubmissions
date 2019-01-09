@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This indicator represents the number of attempts allowed for an assignment activity.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,16 +27,13 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * This indicator represents the number of attempts allowed for an assignment activity.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class maxattempts_set extends \core_analytics\local\indicator\discrete {
-
-    /**
-     * @var int[] Assign instances maxattempt values.
-     */
-    protected $maxattempts;
 
     /**
      * Returns the name.
@@ -56,10 +55,22 @@ class maxattempts_set extends \core_analytics\local\indicator\discrete {
         return array('assign');
     }
 
+    /**
+     * This discrete indicator returns four possible values.
+     *
+     * @return int[] An array of classes.
+     */
     protected static function get_classes() {
         return [0, 1, 2, 3];
     }
 
+    /**
+     * Displays the indicator calculated value in human-ready language.
+     *
+     * @param  float  $value
+     * @param  string $subtype
+     * @return string
+     */
     public function get_display_value($value, $subtype = false) {
         if ($value == 0) {
             return get_string('unlimitedattempts', 'assign');
@@ -67,8 +78,14 @@ class maxattempts_set extends \core_analytics\local\indicator\discrete {
         return $value;
     }
 
+    /**
+     * This indicator does not really imply that something is ok or not ok.
+     *
+     * @param  float $value
+     * @param  string $subtype
+     * @return string
+     */
     public function get_calculation_outcome($value, $subtype = false) {
-        // TODO Update this if we want this model to be used in production.
         return self::OUTCOME_OK;
     }
 
@@ -82,28 +99,13 @@ class maxattempts_set extends \core_analytics\local\indicator\discrete {
      * @return float
      */
     protected function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {
-        global $DB;
+        $assign = $this->retrieve('assign', $sampleid);
 
-        $cm = $this->retrieve('course_modules', $sampleid);
-
-        if (!isset($this->gradeitems[$cm->id])) {
-            if (!$instance =  $DB->get_record('assign', array('id' => $cm->instance), 'id, maxattempts')) {
-                $this->maxattempts[$cm->id] = null;
-            } else {
-                $this->maxattempts[$cm->id] = $instance->maxattempts;
-            }
-        }
-
-        // The indicator can not be calculated.
-        if (is_null($this->maxattempts[$cm->id])) {
-            return null;
-        }
-
-        if ($this->maxattempts[$cm->id] == -1) {
+        if ($assign->maxattempts == -1) {
             return 0;
-        } else if ($this->maxattempts[$cm->id] == 1) {
+        } else if ($assign->maxattempts == 1) {
             return 1;
-        } else if ($this->maxattempts[$cm->id] == 2) {
+        } else if ($assign->maxattempts == 2) {
             return 2;
         } else {
             return 3;

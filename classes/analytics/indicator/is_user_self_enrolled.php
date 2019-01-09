@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Self-enrolled user.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +27,8 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Self-enrolled user.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -32,7 +36,7 @@ defined('MOODLE_INTERNAL') || die();
 class is_user_self_enrolled extends \core_analytics\local\indicator\binary {
 
     /**
-     * @var int[]
+     * @var string[]
      */
     protected $enrols = [];
 
@@ -48,7 +52,7 @@ class is_user_self_enrolled extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only the user enrolment data is required.
      *
      * @return string[]
      */
@@ -70,6 +74,7 @@ class is_user_self_enrolled extends \core_analytics\local\indicator\binary {
 
         $ue = $this->retrieve('user_enrolments', $sampleid);
 
+        // Cache from enrol->id to the enrolment method name.
         if (!isset($this->enrols[$ue->enrolid])) {
             if ($enrol = $DB->get_record('enrol', ['id' => $ue->enrolid], 'id, enrol')) {
                 $this->enrols[$ue->enrolid] = $enrol->enrol;

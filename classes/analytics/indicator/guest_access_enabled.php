@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Is guest access enabled in this course?
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,6 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/gradelib.php');
 
 /**
+ * Is guest access enabled in this course?
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -50,7 +54,7 @@ class guest_access_enabled extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only course data is required.
      *
      * @return string[]
      */

@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Percent of quizzes attempted by the student.
  *
  * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -26,6 +27,7 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Percent of quizzes attempted by the student.
  *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
@@ -48,7 +50,7 @@ class quiz_attempts extends \core_analytics\local\indicator\linear {
      * @return string[]
      */
     public static function required_sample_data() {
-        return array('course', 'user');
+        return array('course', 'user', 'course_modules');
     }
 
     /**

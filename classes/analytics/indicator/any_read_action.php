@@ -15,6 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Any read action.
+ *
+ * Any read action in this context. This indicator limits the observed actions to a
+ * specific user if it is provided.
  *
  * @package   core
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
@@ -26,6 +30,11 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ *
+ * Any read action.
+ *
+ * Any read action in this context. This indicator limits the observed actions to a
+ * specific user if it is provided.
  *
  * @package   core
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
@@ -45,7 +54,7 @@ class any_read_action extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only a context is required
      *
      * @return string[]
      */
@@ -66,16 +75,16 @@ class any_read_action extends \core_analytics\local\indicator\binary {
     protected function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {
         global $DB;
 
+        if (!$logstore = \core_analytics\manager::get_analytics_logstore()) {
+            throw new \coding_exception('No available log stores');
+        }
+
         $select = '';
         $params = array();
 
         if ($user = $this->retrieve('user', $sampleid)) {
             $select .= "userid = :userid AND ";
             $params = $params + array('userid' => $user->id);
-        }
-
-        if (!$logstore = \core_analytics\manager::get_analytics_logstore()) {
-            throw new \coding_exception('No available log stores');
         }
 
         // Filter by context to use the logstore_standard_log db table index.

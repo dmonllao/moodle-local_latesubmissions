@@ -15,6 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Accessed section activities
+ *
+ * This indicator represents the percentage of activities and resources
+ * in the activity section that were by the student.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +30,11 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Accessed section activities
+ *
+ * This indicator represents the percentage of activities and resources
+ * in the activity section that were by the student.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -43,7 +53,7 @@ class accessed_section_activities extends \core_analytics\local\indicator\linear
     }
 
     /**
-     * required_sample_data
+     * This indicator requires a user and a course module to be calculated.
      *
      * @return string[]
      */

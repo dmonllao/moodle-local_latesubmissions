@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Forum dicussions in a course.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +27,8 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Forum dicussions in a course.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -43,12 +47,12 @@ class forum_discussions extends \core_analytics\local\indicator\linear {
     }
 
     /**
-     * required_sample_data
+     * A user and a course are required.
      *
      * @return string[]
      */
     public static function required_sample_data() {
-        return array('user', 'course_modules');
+        return array('user', 'course');
     }
 
     /**
@@ -64,7 +68,6 @@ class forum_discussions extends \core_analytics\local\indicator\linear {
         global $DB;
 
         $course = $this->retrieve('course', $sampleid);
-        $coursemodule = $this->retrieve('course_modules', $sampleid);
         $user = $this->retrieve('user', $sampleid);
 
         if (!$logstore = \core_analytics\manager::get_analytics_logstore()) {
@@ -86,6 +89,7 @@ class forum_discussions extends \core_analytics\local\indicator\linear {
             $instance = $this->cms[$cm->id];
 
             if ($instance->type == 'news') {
+                // Skip news forum.
                 continue;
             }
 

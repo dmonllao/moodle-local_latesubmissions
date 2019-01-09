@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Assignment submission statement indicator.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,16 +27,13 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Assignment submission statement indicator.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class accept_statement_set extends \core_analytics\local\indicator\binary {
-
-    /**
-     * @var int[] Assign instances requiresubmissionstatement values.
-     */
-    protected $acceptstatements;
 
     /**
      * Returns the name.
@@ -48,12 +47,23 @@ class accept_statement_set extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * This indicator requires an assignment activity to be calculated
      *
      * @return string[]
      */
     public static function required_sample_data() {
         return array('assign');
+    }
+
+    /**
+     * This indicator does not really imply that something is ok or not ok.
+     *
+     * @param  float $value
+     * @param  string $subtype
+     * @return string
+     */
+    public function get_calculation_outcome($value, $subtype = false) {
+        return self::OUTCOME_OK;
     }
 
     /**
@@ -66,27 +76,11 @@ class accept_statement_set extends \core_analytics\local\indicator\binary {
      * @return float
      */
     protected function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {
-        global $DB;
+        $assign = $this->retrieve('assign', $sampleid);
 
-        $cm = $this->retrieve('course_modules', $sampleid);
-
-        if (!isset($this->gradeitems[$cm->id])) {
-            if (!$instance =  $DB->get_record('assign', array('id' => $cm->instance), 'id, requiresubmissionstatement')) {
-                $this->acceptstatements[$cm->id] = null;
-            } else {
-                $this->acceptstatements[$cm->id] = $instance->requiresubmissionstatement;
-            }
-        }
-
-        // The indicator can not be calculated.
-        if (is_null($this->acceptstatements[$cm->id])) {
-            return null;
-        }
-
-        if ($this->acceptstatements[$cm->id]) {
+        if ($assign->requiresubmissionstatement) {
             return self::get_max_value();
         }
-
         return self::get_min_value();
     }
 }

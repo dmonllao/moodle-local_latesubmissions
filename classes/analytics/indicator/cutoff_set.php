@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * A cut off date is set for this assignment.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,16 +27,13 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * A cut off date is set for this assignment.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cutoff_set extends \core_analytics\local\indicator\binary {
-
-    /**
-     * @var int[] Assign instances cutoffvalues
-     */
-    protected $cutoffs;
 
     /**
      * Returns the name.
@@ -48,12 +47,23 @@ class cutoff_set extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only an assign activity is required.
      *
      * @return string[]
      */
     public static function required_sample_data() {
         return array('assign');
+    }
+
+    /**
+     * This indicator does not really imply that something is ok or not ok.
+     *
+     * @param  float $value
+     * @param  string $subtype
+     * @return string
+     */
+    public function get_calculation_outcome($value, $subtype = false) {
+        return self::OUTCOME_OK;
     }
 
     /**
@@ -66,27 +76,11 @@ class cutoff_set extends \core_analytics\local\indicator\binary {
      * @return float
      */
     protected function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {
-        global $DB;
+        $assign = $this->retrieve('assign', $sampleid);
 
-        $cm = $this->retrieve('course_modules', $sampleid);
-
-        if (!isset($this->gradeitems[$cm->id])) {
-            if (!$instance =  $DB->get_record('assign', array('id' => $cm->instance), 'id, cutoffdate')) {
-                $this->cutoffs[$cm->id] = null;
-            } else {
-                $this->cutoffs[$cm->id] = $instance->cutoffdate;
-            }
-        }
-
-        // The indicator can not be calculated.
-        if (is_null($this->cutoffs[$cm->id])) {
-            return null;
-        }
-
-        if ($this->cutoffs[$cm->id]) {
+        if ($assign->cutoffdate) {
             return self::get_max_value();
         }
-
         return self::get_min_value();
     }
 }

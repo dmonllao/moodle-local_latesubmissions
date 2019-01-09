@@ -16,6 +16,11 @@
 
 /**
  *
+ * Any read action in this course.
+ *
+ * Any read action in this course. This indicator limits the observed actions to a
+ * specific user if it is provided.
+ *
  * @package   core
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,6 +31,10 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Any read action in this course.
+ *
+ * Any read action in this course. This indicator limits the observed actions to a
+ * specific user if it is provided.
  *
  * @package   core
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
@@ -45,7 +54,7 @@ class any_read_action_in_course extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only a course is required.
      *
      * @return string[]
      */
@@ -70,7 +79,7 @@ class any_read_action_in_course extends \core_analytics\local\indicator\binary {
             throw new \coding_exception('No available log stores');
         }
 
-        // Filter by context to use the logstore_standard_log db table index.
+        // Filter by course to use the logstore_standard_log db table index.
         $course = $this->retrieve('course', $sampleid);
         $select = "courseid = :courseid AND anonymous = :anonymous";
         $params = array('courseid' => $course->id, 'anonymous' => '0');

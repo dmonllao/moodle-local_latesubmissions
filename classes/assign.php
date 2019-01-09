@@ -42,6 +42,14 @@ class assign implements \core_analytics\analysable {
     protected $cminfo = null;
     protected $instance = null;
 
+    /**
+     * Lightweight constructor as all site assign will be loaded into memory.
+     *
+     * Use self::load as a lazy loader so this instance is garbage collected
+     * once the analytics API is done with it.
+     *
+     * @param int|\cm_info $cm
+     */
     public function __construct($cm) {
         if (is_scalar($cm)) {
             $this->cmid = $cm;
@@ -52,7 +60,7 @@ class assign implements \core_analytics\analysable {
     }
 
     /**
-     * The analysable unique identifier in the site.
+     * The unique identifier this analysable element has in the site.
      *
      * @return int.
      */
@@ -60,6 +68,11 @@ class assign implements \core_analytics\analysable {
         return $this->cmid;
     }
 
+    /**
+     * Analysable lazy loader.
+     *
+     * @return void
+     */
     public function load() {
         global $DB;
 
@@ -97,7 +110,7 @@ class assign implements \core_analytics\analysable {
     }
 
     /**
-     * The start of the analysable if there is one.
+     * The start of this analysable is the start of the course.
      *
      * @return int|false
      */
@@ -134,7 +147,7 @@ class assign implements \core_analytics\analysable {
     }
 
     /**
-     * The end of the analysable if there is one.
+     * The end is the assignment due date.
      *
      * @return int|false
      */

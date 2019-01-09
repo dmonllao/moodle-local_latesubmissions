@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * A grade to pass is set.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,6 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/gradelib.php');
 
 /**
+ * A grade to pass is set.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -50,7 +54,7 @@ class grade_to_pass_set extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only the course is required but this will work at course_module level if a cm is provided.
      *
      * @return string[]
      */

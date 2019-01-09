@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Procrastination indicator based on previous choice activities.
  *
  * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -26,6 +27,7 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Procrastination indicator based on previous choice activities.
  *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}

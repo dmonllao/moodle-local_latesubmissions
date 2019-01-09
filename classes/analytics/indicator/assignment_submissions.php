@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This indicator represents the percentage of assignments completed by the student.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +27,8 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * This indicator represents the percentage of assignments completed by the student.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -43,12 +47,12 @@ class assignment_submissions extends \core_analytics\local\indicator\linear {
     }
 
     /**
-     * required_sample_data
+     * The user, the course module and the course are required to process this indicator.
      *
      * @return string[]
      */
     public static function required_sample_data() {
-        return array('user', 'course_modules');
+        return array('user', 'course_modules', 'course');
     }
 
     /**

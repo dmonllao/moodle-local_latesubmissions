@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Abstract analyser for activities.
+ * Abstract analyser for activity-level analysable elements.
  *
  * @package   core_analytics
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -27,7 +27,7 @@ namespace local_latesubmissions\analytics\analyser;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Abstract analyser for activities.
+ * Abstract analyser for activity-level analysable elements.
  *
  * @package   core_analytics
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -36,18 +36,18 @@ defined('MOODLE_INTERNAL') || die();
 abstract class by_activity extends \core_analytics\local\analyser\base {
 
     /**
-     * Allow sub-classes to reuse this class easily.
+     * Allow sub-classes to limit activities to a specific activity type.
      *
-     * @return string|false
+     * @return string|false The modname (no frankenstyle). False if all activity types.
      */
     protected function filter_by_mod() {
         return false;
     }
 
     /**
-     * Returns the analysable class.
+     * Returns the analysable class this analyser will use.
      *
-     * @todo This shouldn't be abstract, we should have a course_module analysable.
+     * @todo This class and method shouldn't be abstract, we should have a course_module analysable.
      * @return string
      */
     abstract protected function get_analysable_class();
@@ -71,6 +71,7 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
             $courses = [$DB->get_record('course', ['id' => $this->options['filter']])];
         } else {
             // Iterate through all potentially valid courses.
+            // We just retrieve c.id to avoid memory usage issues.
             $courses = get_courses('all', 'c.sortorder ASC', 'c.id');
         }
 

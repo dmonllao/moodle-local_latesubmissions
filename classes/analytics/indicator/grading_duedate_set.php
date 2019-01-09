@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * A grading due date is set of this assignment.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,16 +27,13 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * A grading due date is set of this assignment.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class grading_duedate_set extends \core_analytics\local\indicator\binary {
-
-    /**
-     * @var int[] Assign instances gradingduedate values.
-     */
-    protected $gradingduedates;
 
     /**
      * Returns the name.
@@ -57,6 +56,17 @@ class grading_duedate_set extends \core_analytics\local\indicator\binary {
     }
 
     /**
+     * This indicator does not really imply that something is ok or not ok.
+     *
+     * @param  float $value
+     * @param  string $subtype
+     * @return string
+     */
+    public function get_calculation_outcome($value, $subtype = false) {
+        return self::OUTCOME_OK;
+    }
+
+    /**
      * calculate_sample
      *
      * @param int $sampleid
@@ -66,27 +76,11 @@ class grading_duedate_set extends \core_analytics\local\indicator\binary {
      * @return float
      */
     protected function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {
-        global $DB;
+        $assign = $this->retrieve('assign', $sampleid);
 
-        $cm = $this->retrieve('course_modules', $sampleid);
-
-        if (!isset($this->gradeitems[$cm->id])) {
-            if (!$instance =  $DB->get_record('assign', array('id' => $cm->instance), 'id, gradingduedate')) {
-                $this->gradingduedates[$cm->id] = null;
-            } else {
-                $this->gradingduedates[$cm->id] = $instance->gradingduedate;
-            }
-        }
-
-        // The indicator can not be calculated.
-        if (is_null($this->gradingduedates[$cm->id])) {
-            return null;
-        }
-
-        if ($this->gradingduedates[$cm->id]) {
+        if ($assign->gradingduedate) {
             return self::get_max_value();
         }
-
         return self::get_min_value();
     }
 }

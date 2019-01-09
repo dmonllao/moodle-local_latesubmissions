@@ -47,7 +47,13 @@ class really_close_to_deadline extends \core_analytics\local\time_splitting\base
 
         $now = time();
 
+        if (!$analysable->get_start()) {
+            // No time start == no analysable.
+            return false;
+        }
+
         if (!$analysable->get_end()) {
+            // No time end == no analysable.
             return false;
         }
 
@@ -75,15 +81,13 @@ class really_close_to_deadline extends \core_analytics\local\time_splitting\base
     }
 
     /**
+     * This time-splitting method returns one single range, the start to two days before the end.
      *
-     * @return array
+     * @return array The list of ranges, each of them including 'start', 'end' and 'time'
      */
     protected function define_ranges() {
 
         $analysablestart = $this->analysable->get_start();
-        if (!$analysablestart) {
-            $analysablestart = $this->analysable->get_end() - (4 * WEEKSECS);
-        }
 
         $ranges = array(
             array(

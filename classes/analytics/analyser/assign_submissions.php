@@ -15,6 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Analyser for assignment submissions.
+ *
+ * It iterates through local_latesubmissions\assign analysables.
  *
  * @package   core
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -29,6 +32,9 @@ require_once($CFG->dirroot . '/mod/assign/locallib.php');
 require_once($CFG->dirroot . '/lib/enrollib.php');
 
 /**
+ * Analyser for assignment submissions.
+ *
+ * It iterates through local_latesubmissions\assign analysables.
  *
  * @package   core
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
@@ -36,34 +42,31 @@ require_once($CFG->dirroot . '/lib/enrollib.php');
  */
 class assign_submissions extends by_activity {
 
+    /**
+     * Limit the retrieved activity modules to 'assign' module.
+     *
+     * @return string The module name
+     */
     protected function filter_by_mod() {
         return 'assign';
     }
 
+    /**
+     * The analysable element this analyser will iterate through.
+     *
+     * @return string The absolute class namespace.
+     */
     protected function get_analysable_class() {
         return '\local_latesubmissions\assign';
     }
 
     /**
+     * The database table whose id field uniquely identifies each sample this analyser provides.
      *
      * @return string
      */
     public function get_samples_origin() {
         return 'assign_submission';
-    }
-
-    protected function cmid_from_sampleid($sampleid) {
-        global $DB;
-
-        // TODO Add a request cache with 2 request-level arrays. One to list the
-        // cms we already fetched and another one, indexed by ass.id and with cm.id
-        // value.
-        $sql = "SELECT cm.id FROM {course_modules} cm
-                  JOIN {modules} m ON m.id = cm.module
-                  JOIN {assign_submission} ass ON ass.assignment = cm.instance
-                 WHERE ass.id = :id";
-        $cm = $DB->get_record_sql($sql, ['id' => $sampleid]);
-        return $cm->id;
     }
 
     /**
@@ -78,11 +81,13 @@ class assign_submissions extends by_activity {
     }
 
     /**
+     * This method is used by the analytics API to know the entities associated to this analyser samples.
      *
      * @return string[]
      */
     protected function provided_sample_data() {
-        return array('course', 'user', 'user_enrolments', 'context', 'course_modules', 'assign', 'assign_submission');
+        return array('course', 'user', 'user_enrolments', 'context', 'course_modules',
+            'assign', 'assign_submission');
     }
 
     /**
@@ -228,7 +233,9 @@ class assign_submissions extends by_activity {
     }
 
     /**
-     * Returns the sample description
+     * Returns the sample description.
+     *
+     * This is the text and image displayed in the predictions list.
      *
      * @param int $sampleid
      * @param int $contextid
@@ -238,5 +245,25 @@ class assign_submissions extends by_activity {
     public function sample_description($sampleid, $contextid, $sampledata) {
         $description = fullname($sampledata['user'], true, array('context' => $contextid));
         return array($description, new \user_picture($sampledata['user']));
+    }
+
+    /**
+     * Internal function to retrieve the cm from a sample id.
+     *
+     * @param  int $sampleid The sample id.
+     * @return int The course module id
+     */
+    protected function cmid_from_sampleid($sampleid) {
+        global $DB;
+
+        // TODO Add a request cache with 2 request-level arrays. One to list the
+        // cms we already fetched and another one, indexed by ass.id and with cm.id
+        // value.
+        $sql = "SELECT cm.id FROM {course_modules} cm
+                  JOIN {modules} m ON m.id = cm.module
+                  JOIN {assign_submission} ass ON ass.assignment = cm.instance
+                 WHERE ass.id = :id";
+        $cm = $DB->get_record_sql($sql, ['id' => $sampleid]);
+        return $cm->id;
     }
 }

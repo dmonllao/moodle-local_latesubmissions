@@ -48,7 +48,7 @@ class self_enrol_enabled extends \core_analytics\local\indicator\binary {
     }
 
     /**
-     * required_sample_data
+     * Only the course is required.
      *
      * @return string[]
      */

@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Activity weight in the gradebook.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,6 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/gradelib.php');
 
 /**
+ * Activity weight in the gradebook.
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -50,7 +54,7 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
     }
 
     /**
-     * required_sample_data
+     * Only a course module is required.
      *
      * @return string[]
      */
@@ -58,10 +62,21 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
         return array('course_modules');
     }
 
+    /**
+     * The different classes this discrete indicator provides.
+     * @return [type] [description]
+     */
     protected static function get_classes() {
         return [0, 1, 2, 3, 4];
     }
 
+    /**
+     * Custom indicator calculated value display as otherwise we would display meaningless numbers to users.
+     *
+     * @param  float  $value
+     * @param  string $subtype
+     * @return string
+     */
     public function get_display_value($value, $subtype = false) {
         switch ($value) {
             case '0':
@@ -83,8 +98,14 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
         return $displayvalue;
     }
 
+    /**
+     * This indicator does not really imply that something is ok or not ok.
+     *
+     * @param  float $value
+     * @param  string $subtype
+     * @return string
+     */
     public function get_calculation_outcome($value, $subtype = false) {
-        // TODO Update this if we want this model to be used in production.
 		return self::OUTCOME_OK;
     }
 
@@ -117,7 +138,7 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
                 return $this->cmclass[$cm->id];
             }
 
-            // TODO This should be part of grades API. I am probably missing important stuff.
+            // TODO This should be part of grades API. I am probably missing stuff like GRADE_MIN_MAX_FROM_GRADE_*.
             $weight = $gi->aggregationcoef2;
             $category = $gi->get_parent_category();
             while (!$category->is_course_category()) {
