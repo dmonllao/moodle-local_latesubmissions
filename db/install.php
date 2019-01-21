@@ -44,7 +44,6 @@ function xmldb_local_latesubmissions_install() {
             "\\local_latesubmissions\\analytics\\indicator\\any_read_action_in_course",
             "\\local_latesubmissions\\analytics\\indicator\\assignment_submissions",
             "\\local_latesubmissions\\analytics\\indicator\\forum_posts",
-            "\\local_latesubmissions\\analytics\\indicator\\grade_item_weight",
             "\\local_latesubmissions\\analytics\\indicator\\grade_to_pass_set",
             "\\local_latesubmissions\\analytics\\indicator\\guest_access_enabled",
             "\\local_latesubmissions\\analytics\\indicator\\is_user_self_enrolled",

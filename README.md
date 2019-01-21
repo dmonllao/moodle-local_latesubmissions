@@ -18,3 +18,7 @@ https://docs.moodle.org/35/en/Installing_plugins
 # Usage
 
 https://docs.moodle.org/35/en/Analytics
+
+# Known bugs
+
+https://tracker.moodle.org/browse/MDL-64320 is a Moodle core bug that affects two of the indicators included in this plugin: "Number of assignment submission attempts" and "Activity weight in the gradebook". The latter was originally part of the prediction model that identifies students that are likely to miss an assignment due date. It has been removed due to MDL-64320. It will be added back once the issue is fixed in core.
