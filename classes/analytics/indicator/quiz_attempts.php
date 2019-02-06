@@ -58,8 +58,8 @@ class quiz_attempts extends \core_analytics\local\indicator\linear {
      *
      * @param int $sampleid
      * @param string $sampleorigin
-     * @param int|false $notusedstarttime
-     * @param int|false $notusedendtime
+     * @param int|false $starttime
+     * @param int|false $endtime
      * @return float
      */
     public function calculate_sample($sampleid, $sampleorigin, $starttime = false, $endtime = false) {

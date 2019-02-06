@@ -21,7 +21,7 @@
  * Any read action in this course. This indicator limits the observed actions to a
  * specific user if it is provided.
  *
- * @package   core
+ * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -36,7 +36,7 @@ defined('MOODLE_INTERNAL') || die();
  * Any read action in this course. This indicator limits the observed actions to a
  * specific user if it is provided.
  *
- * @package   core
+ * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

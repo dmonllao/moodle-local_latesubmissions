@@ -14,9 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
+/**
+ * Late submissions installer.
+ *
+ * @package    local_latesubmissions
+ * @copyright  2019 David Monllao
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Late submissions plugin installer.
+ *
+ * @package    local_latesubmissions
+ * @return null
+ */
 function xmldb_local_latesubmissions_install() {
     global $DB;
 
@@ -63,6 +75,7 @@ function xmldb_local_latesubmissions_install() {
             $indicators[$indicator->get_id()] = $indicator;
         }
         $target = \core_analytics\manager::get_target('\local_latesubmissions\analytics\target\late_assign_submission');
-        $model = \core_analytics\model::create($target, $indicators, '\local_latesubmissions\analytics\time_splitting\really_close_to_deadline');
+        $model = \core_analytics\model::create($target, $indicators,
+            '\local_latesubmissions\analytics\time_splitting\really_close_to_deadline');
     }
 }

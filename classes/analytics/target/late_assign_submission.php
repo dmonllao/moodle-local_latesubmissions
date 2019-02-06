@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Target to predict late assignment submissions.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,17 +27,27 @@ namespace local_latesubmissions\analytics\target;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Target to predict late assignment submissions.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class late_assign_submission extends \core_analytics\local\target\binary {
 
+    /**
+     * Returns the model name
+     * @return string
+     */
     public static function get_name() : \lang_string {
         return new \lang_string('lateassignsubmission', 'local_latesubmissions');
     }
 
+    /**
+     * Predictions that return this class will be ignored.
+     *
+     * @return int[]
+     */
     protected function ignored_predicted_classes() {
         return array(0);
     }
@@ -144,7 +155,7 @@ class late_assign_submission extends \core_analytics\local\target\binary {
      * @param bool $fortraining
      * @return bool
      */
-    public function is_valid_sample($sampleid, \core_analytics\analysable $cm, $fortraining = true) {
+    public function is_valid_sample($sampleid, \core_analytics\analysable $analysable, $fortraining = true) {
 
         $userenrol = $this->retrieve('user_enrolments', $sampleid);
         $course = $this->retrieve('course', $sampleid);
@@ -231,7 +242,7 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         }
 
         if ($log->timecreated > $analysable->get_end()) {
-            // Assessable submitted after the end time (due date or cut off if no due date)
+            // Assessable submitted after the end time (due date or cut off if no due date).
             return 1;
         }
 

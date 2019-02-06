@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Self-enroled is enabled indicator
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +27,8 @@ namespace local_latesubmissions\analytics\indicator;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Self-enroled is enabled indicator
+ *
  * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

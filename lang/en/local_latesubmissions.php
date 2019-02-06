@@ -19,6 +19,7 @@
  *
  * @package    local_latesubmissions
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2019 David Monllao {@link http://www.davidmonllao.com}
  */
 
 defined('MOODLE_INTERNAL') || die();

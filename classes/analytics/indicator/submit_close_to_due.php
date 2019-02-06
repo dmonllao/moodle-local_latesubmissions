@@ -40,8 +40,19 @@ class submit_close_to_due extends \core_analytics\local\indicator\linear {
      */
     protected $cms = [];
 
+    /**
+     * @var string
+     */
     protected static $modulename = 'assign';
+
+    /**
+     * @var string
+     */
     protected static $fieldname = 'duedate';
+
+    /**
+     * @var string
+     */
     protected static $eventname = '\mod_assign\event\assessable_submitted';
 
     /**
@@ -99,7 +110,8 @@ class submit_close_to_due extends \core_analytics\local\indicator\linear {
             }
             $instance = $this->cms[$cm->id];
 
-            if ($instance->{static::$fieldname} && $instance->{static::$fieldname} > $starttime && $instance->{static::$fieldname} < $endtime) {
+            if ($instance->{static::$fieldname} && $instance->{static::$fieldname} > $starttime &&
+                    $instance->{static::$fieldname} < $endtime) {
                 if ($cm->uservisible) {
                     $select = 'userid = :userid AND contextlevel = :contextlevel AND contextinstanceid = :cmid ' .
                         'AND eventname = :eventname';

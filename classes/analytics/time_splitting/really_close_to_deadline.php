@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Time splitting method to execute predictions two days before the end date.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,8 +27,9 @@ namespace local_latesubmissions\analytics\time_splitting;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Time splitting method to execute predictions two days before the end date.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

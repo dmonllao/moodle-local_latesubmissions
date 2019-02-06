@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Amount of write actions.
  *
- * @package   core
+ * @package   local_latesubmissions
  * @copyright 2016 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

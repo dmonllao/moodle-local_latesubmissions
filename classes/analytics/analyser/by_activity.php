@@ -17,7 +17,7 @@
 /**
  * Abstract analyser for activity-level analysable elements.
  *
- * @package   core_analytics
+ * @package   local_atesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Abstract analyser for activity-level analysable elements.
  *
- * @package   core_analytics
+ * @package   local_atesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

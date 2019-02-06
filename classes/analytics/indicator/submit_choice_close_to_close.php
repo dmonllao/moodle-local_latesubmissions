@@ -35,8 +35,19 @@ defined('MOODLE_INTERNAL') || die();
  */
 class submit_choice_close_to_close extends submit_close_to_due {
 
+    /**
+     * @var string
+     */
     protected static $modulename = 'choice';
+
+    /**
+     * @var string
+     */
     protected static $fieldname = 'timeclose';
+
+    /**
+     * @var string
+     */
     protected static $eventname = '\mod_choice\event\answer_submitted';
 
     /**

@@ -17,7 +17,7 @@
 /**
  * Assignment analysable.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,17 +29,31 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Assignment analysable.
  *
- * @package   core_analytics
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class assign implements \core_analytics\analysable {
 
+    /**
+     * @var boolean
+     */
     protected $loaded = false;
 
+
+    /**
+     * @var int
+     */
     protected $cmid = null;
 
+    /**
+     * @var \cm_info
+     */
     protected $cminfo = null;
+
+    /**
+     * @var \stdClass
+     */
     protected $instance = null;
 
     /**
@@ -162,6 +176,10 @@ class assign implements \core_analytics\analysable {
         return false;
     }
 
+    /**
+     * Returns the cm_info
+     * @return \cm_info
+     */
     public function get_cm_info() {
         if (!$this->loaded) {
             $this->load();
@@ -169,6 +187,11 @@ class assign implements \core_analytics\analysable {
         return $this->cminfo;
     }
 
+    /**
+     * Returns the assignment activity instance.
+     *
+     * @return \stdClass
+     */
     public function get_instance() {
         if (!$this->loaded) {
             $this->load();

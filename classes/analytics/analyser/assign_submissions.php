@@ -19,7 +19,7 @@
  *
  * It iterates through local_latesubmissions\assign analysables.
  *
- * @package   core
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -36,7 +36,7 @@ require_once($CFG->dirroot . '/lib/enrollib.php');
  *
  * It iterates through local_latesubmissions\assign analysables.
  *
- * @package   core
+ * @package   local_latesubmissions
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -102,6 +102,7 @@ class assign_submissions extends by_activity {
     }
 
     /**
+     * Returns all the samples in the provided analysable.
      *
      * @param \core_analytics\analysable $cm
      * @return array

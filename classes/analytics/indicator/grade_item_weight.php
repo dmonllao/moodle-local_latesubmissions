@@ -106,7 +106,7 @@ class grade_item_weight extends \core_analytics\local\indicator\discrete {
      * @return string
      */
     public function get_calculation_outcome($value, $subtype = false) {
-		return self::OUTCOME_OK;
+        return self::OUTCOME_OK;
     }
 
     /**
