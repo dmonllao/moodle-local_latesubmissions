@@ -99,34 +99,38 @@ class late_assign_submission extends \core_analytics\local\target\binary {
      */
     public function is_valid_analysable(\core_analytics\analysable $cm, $fortraining = true) {
         if (!$cm->get_end()) {
-            return 'no due date';
+            return 'No due date';
         }
 
         if (!$cm->get_cm_info()->visible) {
-            return 'course module not visible';
+            return 'Course module not visible';
         }
 
         if ($cm->get_start() > time()) {
-            return 'not yet started';
-        }
-
-        if ($fortraining && $cm->get_end() > time()) {
-            return 'still open';
+            return 'Not yet started';
         }
 
         // Weird but possible.
         if ($cm->get_start() >= $cm->get_end()) {
-            return 'wrong dates';
+            return 'Wrong dates';
         }
 
         if ($cm->get_instance()->nosubmissions) {
-            return 'no submission types specified';
+            return 'No submission types specified';
         }
 
         if ($cm->get_instance()->teamsubmission) {
             // Method calculate_sample looks for logs; on team submissions assignments not
             // all students have logs.
             return 'sorry, this model can\'t use team submissions assignments yet';
+        }
+
+        if ($fortraining && $cm->get_end() > time()) {
+            return 'Still open';
+        }
+
+        if (!$fortraining && $cm->get_end() < time()) {
+            return 'Past due date';
         }
 
         return true;
