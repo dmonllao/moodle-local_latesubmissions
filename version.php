@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017111300;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2017111301;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2017111300;        // Requires this Moodle version.
 $plugin->component = 'local_latesubmissions';
 $plugin->maturity = MATURITY_RC;
-$plugin->release = $plugin->version;
+$plugin->release = 'Build ' . $plugin->version;
