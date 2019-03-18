@@ -13,11 +13,11 @@ The plugin uses Moodle core's analytics API as a base. This predictive model ind
 
 # Installation
 
-https://docs.moodle.org/35/en/Installing_plugins
+https://docs.moodle.org/en/Installing_plugins
 
 # Usage
 
-https://docs.moodle.org/35/en/Analytics
+https://docs.moodle.org/en/Analytics
 
 # Known bugs
 
