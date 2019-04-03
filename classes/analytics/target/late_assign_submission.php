@@ -44,15 +44,6 @@ class late_assign_submission extends \core_analytics\local\target\binary {
     }
 
     /**
-     * Predictions that return this class will be ignored.
-     *
-     * @return int[]
-     */
-    protected function ignored_predicted_classes() {
-        return array(0);
-    }
-
-    /**
      * Returns the analyser class that should be used along with this target.
      *
      * @return string The full class name as a string
@@ -80,7 +71,7 @@ class late_assign_submission extends \core_analytics\local\target\binary {
      * @param bool $includedetailsaction
      * @return \core_analytics\prediction_action[]
      */
-    public function prediction_actions(\core_analytics\prediction $prediction, $includedetailsaction = false) {
+    public function prediction_actions(\core_analytics\prediction $prediction, $includedetailsaction = false, $isinsightuser = false) {
         global $USER;
 
         $actions = array();

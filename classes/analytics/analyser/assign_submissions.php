@@ -107,7 +107,7 @@ class assign_submissions extends by_activity {
      * @param \core_analytics\analysable $cm
      * @return array
      */
-    protected function get_all_samples(\core_analytics\analysable $cm) {
+    public function get_all_samples(\core_analytics\analysable $cm) {
         global $DB;
 
         $assign = new \assign($cm->get_cm_info()->context, $cm->get_cm_info(), $cm->get_cm_info()->get_course());

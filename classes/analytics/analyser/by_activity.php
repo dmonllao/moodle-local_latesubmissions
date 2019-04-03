@@ -59,13 +59,9 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
      */
     public function get_analysables() {
         global $DB;
-
         $modname = $this->filter_by_mod();
-
         $analysableclass = $this->get_analysable_class();
-
         $analysables = array();
-
         // Default to all system courses.
         if (!empty($this->options['filter'])) {
             $courses = [$DB->get_record('course', ['id' => $this->options['filter']])];
@@ -74,7 +70,6 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
             // We just retrieve c.id to avoid memory usage issues.
             $courses = get_courses('all', 'c.sortorder ASC', 'c.id');
         }
-
         foreach ($courses as $course) {
             $modinfo = get_fast_modinfo($course, -1);
             if (!$modname) {
@@ -82,16 +77,67 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
             } else {
                 $cms = $modinfo->get_instances_of($modname);
             }
-
             foreach ($cms as $cm) {
                 $analysables[$cm->id] = new $analysableclass($cm->id);
             }
         }
-
         if (empty($analysables)) {
             $this->log[] = get_string('noactivities', 'local_latesubmissions');
         }
-
         return $analysables;
+    }
+
+    /**
+     * Return the list of courses to analyse.
+     *
+     * @param ?string $action 'prediction', 'training' or null if no specific action needed.
+     * @return \Iterator
+     */
+    public function get_analysables_iterator(?string $action = null) {
+        global $DB;
+
+        $modname = $this->filter_by_mod();
+
+        $analysableclass = $this->get_analysable_class();
+
+        list($sql, $params) = $this->get_iterator_sql('course_modules', CONTEXT_MODULE, $action, 'cm');
+
+
+
+        // This will be updated to filter by context as part of MDL-64739.
+        if (!empty($this->options['filter'])) {
+            $courses = array();
+            foreach ($this->options['filter'] as $courseid) {
+                $courses[$courseid] = new \stdClass();
+                $courses[$courseid]->id = $courseid;
+            }
+
+            list($coursesql, $courseparams) = $DB->get_in_or_equal($courses, SQL_PARAMS_NAMED);
+            $sql .= " AND cm.id IN $coursesql";
+            $params = $params + $courseparams;
+        }
+
+        // Order by course so that get_fast_modinfo cached courses are reused.
+        $ordersql = $this->order_sql('course', 'ASC', 'cm');
+
+        $recordset = $DB->get_recordset_sql($sql . $ordersql, $params);
+
+        if (!$recordset->valid()) {
+            $this->add_log(get_string('noactivities', 'local_latesubmissions'));
+            return [];
+        }
+
+        return new \core\dml\recordset_walk($recordset, function($record) use ($modname) {
+
+            // This should all be read from modinfo's cache.
+            $modinfo = get_fast_modinfo($record->course, -1);
+            $cminfo = $modinfo->get_cm($record->id);
+            if (!$cminfo) {
+                throw new \coding_exception('No course module with the provided id.');
+            }
+
+            $context = \context_helper::preload_from_record($record);
+            return new $analysableclass($cminfo, $context);
+        });
     }
 }

@@ -101,4 +101,12 @@ class really_close_to_deadline extends \core_analytics\local\time_splitting\base
 
         return $ranges;
     }
+
+    /**
+     * Whether to cache or not the indicator calculations.
+     * @return bool
+     */
+    public function cache_indicator_calculations(): bool {
+        return false;
+    }
 }
