@@ -44,6 +44,17 @@ class late_assign_submission extends \core_analytics\local\target\binary {
     }
 
     /**
+     * Overwritten to show a simpler language string.
+     *
+     * @param  int $modelid
+     * @param  \context $context
+     * @return string
+     */
+    public function get_insight_subject(int $modelid, \context $context) {
+        return get_string('studentsatrisk', 'local_latesubmissions', $context->get_context_name(false));
+    }
+
+    /**
      * Returns the analyser class that should be used along with this target.
      *
      * @return string The full class name as a string
@@ -65,10 +76,19 @@ class late_assign_submission extends \core_analytics\local\target\binary {
     }
 
     /**
+     * Only update last analysis time when analysables are processed.
+     * @return bool
+     */
+    public function always_update_analysis_time(): bool {
+        return false;
+    }
+
+    /**
      * prediction_actions
      *
      * @param \core_analytics\prediction $prediction
      * @param bool $includedetailsaction
+     * @param bool $isinsightuser
      * @return \core_analytics\prediction_action[]
      */
     public function prediction_actions(\core_analytics\prediction $prediction, $includedetailsaction = false, $isinsightuser = false) {
@@ -227,13 +247,13 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         $log = reset($nlogs);
 
         if ($log->timecreated < $analysable->get_start()) {
-            // Old submission, send it to the bin as it is likely that this is an
+            // old submission, send it to the bin as it is likely that this is an
             // old enrolment or that the assignment dates are wrong.
             return null;
         }
 
         if ($log->timecreated > $analysable->get_end()) {
-            // Assessable submitted after the end time (due date or cut off if no due date).
+            // assessable submitted after the end time (due date or cut off if no due date).
             return 1;
         }
 

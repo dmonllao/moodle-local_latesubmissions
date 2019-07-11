@@ -72,6 +72,7 @@ $string['quizclosetodue'] = 'Quiz procrastination';
 $string['quizclosetodue_help'] = 'This indicator represents how close to the quiz close time are student attempts.';
 $string['selfenrolenabled'] = 'Self-enrol is enabled';
 $string['selfenrolenabled_help'] = 'Self-enrol is enabled';
+$string['studentsatrisk'] = 'Students at risk of missing {$a}\'s due date';
 $string['timesplitting:reallyclosetodeadline'] = 'Two days before the end';
 $string['timesplitting:reallyclosetodeadline_help'] = 'This time-splitting method generates predictions 2 days before the analysable end date. This end date depends on the model. It can be a course end date, an assignment due date or a quiz close date.';
 $string['useractivity'] = 'User activity';

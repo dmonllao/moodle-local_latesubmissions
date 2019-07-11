@@ -38,6 +38,7 @@ $models = [
             '\local_latesubmissions\analytics\indicator\assignment_submissions',
             '\local_latesubmissions\analytics\indicator\forum_posts',
             '\local_latesubmissions\analytics\indicator\grade_to_pass_set',
+            '\local_latesubmissions\analytics\indicator\grade_item_weight',
             '\local_latesubmissions\analytics\indicator\guest_access_enabled',
             '\local_latesubmissions\analytics\indicator\is_user_self_enrolled',
             '\local_latesubmissions\analytics\indicator\quiz_attempts',
@@ -51,5 +52,6 @@ $models = [
             '\core_user\analytics\indicator\user_profile_set'
         ],
         'timesplitting' => '\local_latesubmissions\analytics\time_splitting\really_close_to_deadline',
+        'enabled' => true,
     ],
 ];

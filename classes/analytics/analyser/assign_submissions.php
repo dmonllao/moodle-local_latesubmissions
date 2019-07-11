@@ -263,8 +263,8 @@ class assign_submissions extends by_activity {
         $sql = "SELECT cm.id FROM {course_modules} cm
                   JOIN {modules} m ON m.id = cm.module
                   JOIN {assign_submission} ass ON ass.assignment = cm.instance
-                 WHERE ass.id = :id";
-        $cm = $DB->get_record_sql($sql, ['id' => $sampleid]);
+                 WHERE ass.id = :id and m.name = :modname";
+        $cm = $DB->get_record_sql($sql, ['id' => $sampleid, 'modname' => 'assign']);
         return $cm->id;
     }
 }

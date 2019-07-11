@@ -68,7 +68,7 @@ class assign implements \core_analytics\analysable {
         if (is_scalar($cm)) {
             $this->cmid = $cm;
         } else {
-            $this->cmid = $cm->cminfo->id;
+            $this->cmid = $cm->get_course_module_record()->id;
             $this->cminfo = $cm;
         }
     }
@@ -94,7 +94,7 @@ class assign implements \core_analytics\analysable {
             list($ignored, $this->cminfo) = get_course_and_cm_from_cmid($this->cmid, 'assign', 0, -1);
         }
 
-        $this->instance = $DB->get_record('assign', array('id' => $this->cminfo->instance));
+        $this->instance = $DB->get_record('assign', array('id' => $this->cminfo->instance), '*', MUST_EXIST);
 
         $this->loaded = true;
     }
