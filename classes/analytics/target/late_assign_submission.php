@@ -64,6 +64,18 @@ class late_assign_submission extends \core_analytics\local\target\binary {
     }
 
     /**
+     * Can the provided time-splitting method be used on this target?.
+     *
+     * Time-splitting methods not matching the target requirements will not be selectable by models based on this target.
+     *
+     * @param  \core_analytics\local\time_splitting\base $timesplitting
+     * @return bool
+     */
+    public function can_use_timesplitting(\core_analytics\local\time_splitting\base $timesplitting): bool {
+        return ($timesplitting instanceof \core_analytics\local\time_splitting\before_now);
+    }
+
+    /**
      * classes_description
      *
      * @return string[]
@@ -107,8 +119,9 @@ class late_assign_submission extends \core_analytics\local\target\binary {
         $actions[] = new \core_analytics\prediction_action('studentmessage', $prediction, $url, $pix,
             get_string('sendmessage', 'message'), false, $attrs);
 
-        return array_merge($actions, parent::prediction_actions($prediction, $includedetailsaction));
+        return array_merge($actions, parent::prediction_actions($prediction, $includedetailsaction, $isinsightuser));
     }
+
     /**
      * Allows the target to verify that the analysable is a good candidate.
      *

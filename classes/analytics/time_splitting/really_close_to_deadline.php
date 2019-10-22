@@ -33,7 +33,8 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2017 David Monllao {@link http://www.davidmonllao.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class really_close_to_deadline extends \core_analytics\local\time_splitting\base {
+class really_close_to_deadline extends \core_analytics\local\time_splitting\base
+        implements \core_analytics\local\time_splitting\before_now {
 
     public static function get_name() : \lang_string {
         return new \lang_string('timesplitting:reallyclosetodeadline', 'local_latesubmissions');

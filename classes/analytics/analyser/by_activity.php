@@ -56,26 +56,15 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
      * Return the list of courses to analyse.
      *
      * @param string|null $action 'prediction', 'training' or null if no specific action needed.
+     * @param \context[] $contexts Only analysables that depend on the provided contexts. All analysables in the system if empty.
      * @return \Iterator
      */
-    public function get_analysables_iterator(?string $action = null) {
+    public function get_analysables_iterator(?string $action = null, array $contexts = []) {
         global $DB;
 
         $analysableclass = $this->get_analysable_class();
 
-        list($sql, $params) = $this->get_iterator_sql('course_modules', CONTEXT_MODULE, $action, 'cm');
-
-        // This will be updated to filter by context as part of MDL-64739.
-        if (!empty($this->options['filter'])) {
-            $courses = array();
-            foreach ($this->options['filter'] as $courseid) {
-                $courses[$courseid] = intval($courseid);
-            }
-
-            list($coursesql, $courseparams) = $DB->get_in_or_equal($courses, SQL_PARAMS_NAMED);
-            $sql .= " AND cm.course $coursesql";
-            $params = $params + $courseparams;
-        }
+        list($sql, $params) = $this->get_iterator_sql('course_modules', CONTEXT_MODULE, $action, 'cm', $contexts);
 
         $modname = $this->filter_by_mod();
         if ($modname) {
@@ -106,5 +95,14 @@ abstract class by_activity extends \core_analytics\local\analyser\base {
             $context = \context_helper::preload_from_record($record);
             return new $analysableclass($cminfo, $context);
         });
+    }
+
+    /**
+     * Can be limited to course categories, courses or specific activities.
+     *
+     * @return array
+     */
+    public static function context_restriction_support(): array {
+        return [CONTEXT_COURSE, CONTEXT_COURSECAT];
     }
 }
